@@ -3,10 +3,18 @@ import java.util.*;
 
 public class GenerateTestData implements Config {
     private static Map<Integer, Set<Integer>> graph;
+    private static int[] dict = new int[V_COUNT];
+    private static Random random = new Random(RANDOM_SEED);
     static {
         graph = new HashMap<>();
+        Set<Integer> set = new HashSet<>();
         for (int i = 0; i < V_COUNT; i++){
             graph.put(i, new HashSet<>());
+            int v = random.nextInt(Integer.MAX_VALUE);
+            while (set.contains(v)){
+                v = random.nextInt(Integer.MAX_VALUE);
+            }
+            dict[i] = v;
         }
     }
 
@@ -29,13 +37,13 @@ public class GenerateTestData implements Config {
         try(PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(dest)))){
             for(Map.Entry<Integer, Set<Integer>> pointEntry : graph.entrySet()){
                 for (int to : pointEntry.getValue()){
-                    writer.println(pointEntry.getKey() + "," + to + "," + 100);
+                    writer.println(dict[pointEntry.getKey()] + "," + dict[to] + "," + random.nextInt(MAX_MONEY));
                 }
             }
         }
         catch (IOException e){
             System.out.println("写入文件失败：" + e.getMessage());
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }

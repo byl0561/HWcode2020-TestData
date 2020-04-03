@@ -1,5 +1,7 @@
 public interface Config {
     String DATA_PATH = "data/test_data.txt";
-    int V_COUNT = 30000;
+    int V_COUNT = 55000;
     int E_COUNT = 280000;
+    int MAX_MONEY = 10000;
+    long RANDOM_SEED = System.currentTimeMillis();
 }
